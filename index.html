@@ -15,9 +15,7 @@
         .slide-2 { background: #FFFAF2; }
         .slide-3 { background: #FFF8EF; }
         .container { max-width: 1500px; margin: 0 auto; }
-        .hero-flex { display: flex; gap: 50px; align-items: center; margin-bottom: 40px; background: rgba(255,250,240,0.6); border-radius: 48px; padding: 30px 40px; flex-wrap: wrap; }
-        .portrait-img { width: 200px; height: 210px; border-radius: 50%; object-fit: cover; border: 5px solid #b47c48; box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
-        .hero-text { flex: 1; }
+        .hero-section { text-align: center; margin-bottom: 40px; }
         h1 { font-size: 2.8rem; color: #5a2e1a; margin-bottom: 12px; }
         h2 { font-size: 2rem; color: #7b4a2a; border-left: 6px solid #b47c48; padding-left: 24px; margin: 30px 0 25px; }
         h3 { font-size: 1.6rem; color: #7b4a2a; margin: 25px 0 15px; }
@@ -46,22 +44,19 @@
         .modal-toast i { font-size: 2.5rem; color: #b47c48; margin-bottom: 15px; display: block; }
         .modal-toast strong { font-size: 1.4rem; display: block; margin-bottom: 15px; color: #5a2e1a; }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); z-index: 1999; }
-        @media (max-width: 1200px) { .slide { padding: 25px 35px; } h1 { font-size: 2.5rem; } .hero-flex { flex-direction: column; text-align: center; } }
+        @media (max-width: 1200px) { .slide { padding: 25px 35px; } h1 { font-size: 2.5rem; } }
     </style>
 </head>
 <body>
 
 <div class="slides-container" id="slidesContainer">
-    <!-- ЭКРАН 1: Хронология жизни с ФОТО -->
+    <!-- ЭКРАН 1: Хронология жизни (без фото) -->
     <div class="slide slide-1">
         <div class="container">
-            <div class="hero-flex">
-                <img class="portrait-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Bichurin.jpg/250px-Bichurin.jpg" alt="Н.Я. Бичурин">
-                <div class="hero-text">
-                    <div class="chuvash-badge"><i class="fas fa-tree"></i> Сын чувашского народа • 1777–1853</div>
-                    <h1><i class="fas fa-feather-alt"></i> Н.Я. Бичурин<br><small style="font-size: 1.2rem;">Никита Яковлевич Бичурин (архимандрит Иакинф) — великий китаевед</small></h1>
-                    <p style="font-size: 1.1rem; line-height: 1.5;">Монах, переводчик, основоположник российского китаеведения. Родился в Чувашии, прославил русскую науку. Первый европейский учёный, переведший древнекитайские хроники и создавший фундамент для изучения Востока в России.</p>
-                </div>
+            <div class="hero-section">
+                <div class="chuvash-badge"><i class="fas fa-tree"></i> Сын чувашского народа • 1777–1853</div>
+                <h1><i class="fas fa-feather-alt"></i> Н.Я. Бичурин<br><small style="font-size: 1.2rem;">Никита Яковлевич Бичурин (архимандрит Иакинф) — великий китаевед</small></h1>
+                <p style="font-size: 1.1rem; line-height: 1.5; max-width: 800px; margin: 15px auto 0;">Монах, переводчик, основоположник российского китаеведения. Родился в Чувашии, прославил русскую науку. Первый европейский учёный, переведший древнекитайские хроники и создавший фундамент для изучения Востока в России.</p>
             </div>
             <h2><i class="fas fa-timeline"></i> Хронология жизни</h2>
             <div class="timeline-grid" id="timelineGrid"></div>
@@ -69,7 +64,7 @@
         </div>
     </div>
 
-    <!-- ЭКРАН 2: Карта путешествий (Яндекс.Карты) -->
+    <!-- ЭКРАН 2: Карта путешествий (Яндекс.Карты, русские названия) -->
     <div class="slide slide-2">
         <div class="container">
             <h2><i class="fas fa-map-marked-alt"></i> Карта путешествий Бичурина</h2>
@@ -83,7 +78,7 @@
         </div>
     </div>
 
-    <!-- ЭКРАН 3: Наследие, труды, память -->
+    <!-- ЭКРАН 3: Наследие, труды, память (полные описания) -->
     <div class="slide slide-3">
         <div class="container">
             <h2><i class="fas fa-graduation-cap"></i> Научное наследие и память</h2>
@@ -127,11 +122,10 @@
     let currentSlide = 0;
     const slidesContainer = document.getElementById('slidesContainer');
 
-    // КАРТА С ЯНДЕКС.КАРТЫ (через прокси, русские названия)
+    // КАРТА С ЯНДЕКС.КАРТЫ (русские названия городов)
     function initMap() {
         map = L.map('map').setView([55.0, 75.0], 3.5);
         
-        // Слой Яндекс.Карты (работает, русские названия городов)
         L.tileLayer('https://core-renderer-tiles.maps.yandex.net/tiles?l=map&x={x}&y={y}&z={z}&scale=1&lang=ru_RU', {
             attribution: '&copy; <a href="https://yandex.ru/maps">Яндекс.Карты</a>',
             maxZoom: 18,
@@ -181,7 +175,7 @@
         }
     };
 
-    // ПОЛНЫЕ ОПИСАНИЯ ТРУДОВ
+    // ПОЛНЫЕ ОПИСАНИЯ ТРУДОВ (НИЧЕГО НЕ СОКРАЩЕНО)
     const worksData = [
         { name: "📖 Собрание сведений о народах, обитавших в Средней Азии в древние времена", desc: "Главный трёхтомный труд Бичурина, за который он получил Демидовскую премию. В трёх томах собраны и переведены с китайского древнейшие сведения о народах, населявших Среднюю Азию — от гуннов и сяньбийцев до тюрок и уйгуров. Книга включает подробную карту территорий Кореи, Северного Китая, Монголии и Средней Азии. До сих пор этот труд остаётся отправной точкой для исследователей истории и этнографии народов Азии." },
         { name: "🗺️ Статистическое описание Китайской империи", desc: "Труд, принёсший Бичурину Демидовскую премию. Первая часть содержит обширные сведения о географии, политическом устройстве, уголовном законодательстве, системе образования и армии Китая. Вторая часть посвящена описанию Маньчжурии, Монголии, Восточного Туркестана и Тибета. В приложениях — уникальные очерки о Великой стене, выращивании чая, сборе женьшеня и ловле жемчуга." },
